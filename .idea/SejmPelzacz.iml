@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/data/deputies/1" />
+      <excludeFolder url="file://$MODULE_DIR$/data/deputies/2" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/1" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/10/0" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/10/33" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/2" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/3" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/4" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/5" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/6" />
+      <excludeFolder url="file://$MODULE_DIR$/data/transcripts/8/0" />
+    </content>
+    <orderEntry type="jdk" jdkName="Python 3.12 (SejmPelzacz)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
