@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 
@@ -86,12 +87,37 @@ def process_transcript(base_path, kadencja, posiedzenie):
     return results
 
 
+def process_and_export(base_path, kadencja, posiedzenie, out_txt, out_csv):
+    # 1) zrób pełną listę wpisów
+    records = process_transcript(base_path, kadencja, posiedzenie)
+
+    # 2) zapisz teksty
+    with open(out_txt, 'w', encoding='utf-8') as jf:
+        for r in records:
+            uid = f"{kadencja}_{posiedzenie}_{r['num']}"
+            entry = {"id": uid, "text": r['text']}
+            jf.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+    # 3) zapisz metadane
+    with open(out_csv, 'w', encoding='utf-8', newline='') as cf:
+        writer = csv.writer(cf)
+        writer.writerow(['id', 'num', 'name', 'function', 'startDateTime', 'endDateTime'])
+        for r in records:
+            uid = f"{kadencja}_{posiedzenie}_{r['num']}"
+            writer.writerow([
+                uid,
+                r['num'],
+                r['name'],
+                r['function'],
+                r.get('start'),
+                r.get('end'),
+            ])
+
 if __name__ == '__main__':
-    base = 'data/transcripts'
-    kadencja = 10
-    posiedzenie = 1
-    transcript = process_transcript(base, kadencja, posiedzenie)
-    for entry in transcript:
-        print(f"# Wypowiedź {entry['num']} - {entry['name']}")
-        print(entry['text'])
-        print("\n---\n")
+    process_and_export(
+        base_path='data/transcripts',
+        kadencja=10,
+        posiedzenie=1,
+        out_txt='transcripts.jsonl',
+        out_csv='metadata.csv'
+    )

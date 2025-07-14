@@ -22,9 +22,9 @@ def download_all_terms():
 
     # Convert prints to a more readable format
     df['prints'] = df['prints'].apply(lambda x: {
-        'count': x['count'] if isinstance(x, dict) else None,
-        'lastChanged': x['lastChanged'] if isinstance(x, dict) else None,
-        'link': x['link'] if isinstance(x, dict) else None
+        'count': x.get('count') if isinstance(x, dict) else None,
+        'lastChanged': x.get('lastChanged') if isinstance(x, dict) else None,
+        'link': x.get('link') if isinstance(x, dict) else None
     })
     # Save to CSV
     csv_path = f'{path}terms.csv'

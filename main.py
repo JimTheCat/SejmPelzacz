@@ -21,3 +21,10 @@ if __name__ == '__main__':
     download_all_terms()
     download_transcripts()
     download_deputies()
+#  process_and_export(
+#      'data/transcripts',
+#      10,
+#      36,
+#      'out.txt',
+#      'out.csv',
+# )
