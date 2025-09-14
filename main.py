@@ -1,12 +1,12 @@
 '''
 Sejm Crawler
 '''
-
-# This script is a web crawler that scrapes data from the Polish Sejm website.
-
+import json
 import os
 
 from test_parser import process_html_transcripts
+
+# This script is a web crawler that scrapes data from the Polish Sejm website.
 
 # Sprawdzenie istnienia folderu 'data'
 if not os.path.exists('data'):
@@ -32,8 +32,39 @@ def transcripts_process():
                             output_dir = os.path.join('output', year)
                             process_html_transcripts(transcript_dir, deputies_path, output_dir)
 
+
+def merge_all_transcripts(base_output_dir: str, merged_txt_path: str, merged_json_path: str):
+    """
+    Merge all _combined.txt into one merged.txt with separators, and all _metadata.json into one list in merged.json.
+    """
+    all_txt_content = []
+    all_metadata = []
+
+    for year_dir in os.listdir(base_output_dir):
+        year_path = os.path.join(base_output_dir, year_dir)
+        if os.path.isdir(year_path):
+            for file in os.listdir(year_path):
+                if file.endswith('_combined.txt'):
+                    txt_path = os.path.join(year_path, file)
+                    with open(txt_path, 'r', encoding='utf-8') as f:
+                        content = f.read().strip()
+                    all_txt_content.append(f"{content}")
+                elif file.endswith('_metadata.json'):
+                    json_path = os.path.join(year_path, file)
+                    with open(json_path, 'r', encoding='utf-8') as f:
+                        metadata = json.load(f)
+                    all_metadata.extend(metadata)
+
+    # Write merged TXT
+    with open(merged_txt_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(all_txt_content))
+    # Write merged JSON
+    with open(merged_json_path, 'w', encoding='utf-8') as f:
+        json.dump(all_metadata, f, ensure_ascii=False, indent=2)
+
 if __name__ == '__main__':
     # download_all_terms()
     # download_transcripts()
     # download_deputies()
-    transcripts_process()
+    # transcripts_process()
+    merge_all_transcripts('output', 'merged_all.txt', 'merged_all.json')
